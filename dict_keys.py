@@ -1,5 +1,10 @@
 import requests
 import json
+import unittest
+import math
+from exercise_calc import Functions
+import pytest
+
 
 type_json = requests.get("https://api.postcodes.io/postcodes/se120nb")
 
@@ -11,8 +16,8 @@ post_code_json = type_json.json()
 #     for key in data:
 #         print(key, data[key])
 
-
-class JSONReader:
+# recursive class, calls it self
+class Dictreader:
     def get_all_values(self, post_code_json):
         for key, value in post_code_json.items():
             if type(value) is dict:
@@ -21,5 +26,23 @@ class JSONReader:
                 print(key, ":", value)
 
 
-json_reader = JSONReader()
-json_reader.get_all_values(post_code_json)
+dict_reader = Dictreader()
+dict_reader.get_all_values(post_code_json)
+
+
+# functions to test
+class Functions:
+
+    def find_sqrt(self, num):
+        return math.sqrt(num)
+    def find_ceil(self, num):
+        return math.ceil(num)
+
+# test for the above methods
+class Calc_Test(unittest.TestCase):
+    a = Functions()
+    def test_sqrt(self):
+        self.assertEqual(self.a.find_sqrt(16), 4)
+    def test_find_ceil(self):
+        self.assertEqual(self.a.find_ceil(25.8237), 26)
+
